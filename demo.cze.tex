@@ -1,0 +1,25 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,xetex,margin=1cm,centering,includefoot]{geometry}
+
+\usepackage{gurps-charsheet}
+\usepackage{fontspec,polyglossia}
+
+\setmainfont{Linux Libertine O}
+\setmainlanguage{czech}
+
+\begin{document}
+
+\begin{twosidecolumns}
+  První odstavec.
+  \addLeftAttribute[points=40,value=12]{Obratnost}
+  \addLeftAttribute{Síla}
+  \addLeftAttribute{Životy}
+
+  \noindent
+  \addRightAttribute[points=60,value=13]{Inteligence}
+  \addRightAttribute{Zdraví}
+  \addRightAttribute{Únava}
+  Druhý odstavec.
+\end{twosidecolumns}
+
+\end{document}

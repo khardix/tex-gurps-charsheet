@@ -1,0 +1,72 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{gurps-charsheet}[2015/02/15 GURPS Character sheet Toolbox]
+
+\RequirePackage[usenames,dvipsnames,table]{xcolor}
+\RequirePackage{ifthen}
+\RequirePackage{geometry}
+\RequirePackage{tikz}
+\RequirePackage{xkeyval}
+
+%% Booleans and tests
+
+%% Two side column environment
+\newcounter{TwoColEnv} %% Count usage of environment for tikz naming and targeting
+\newenvironment{twosidecolumns}%
+{\ignorespaces
+  % === BEGIN Start  twosidecolumns ===
+  \newcounter{LeftAttributes} % How many attributes are already in left column
+  \newcounter{RightAttributes} % How many attributes are already in right column
+  \newlength{\attrHeight}\setlength{\attrHeight}{2.5cm}
+
+  % Set new geometry and make space for the columns
+  \newgeometry{vmargin=1cm,hmargin=3.5cm,includefoot}
+  % Calculate total column height
+  \newlength{\colheight}\setlength{\colheight}{\paperheight}\addtolength{\colheight}{-2cm}
+  % Draw the columns - at its base they are simple rectangles
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[below right, shift={(1cm, -1cm)},inner sep=0pt](tc\theTwoColEnv-LeftCol) at (current page.north west)%
+    {
+      \tikz\draw[line width=1pt] (0cm, 0cm) rectangle (2.5cm, -1\colheight);
+    };
+    \node[below right, shift={(-3.5cm, -1cm)},inner sep=0pt](tc\theTwoColEnv-RightCol) at (current page.north east)%
+    {
+      \tikz\draw[line width=1pt] (0cm, 0cm) rectangle (2.5cm, -1\colheight);
+    };
+  \end{tikzpicture}
+
+  % Define commands for inserting attributes into columns
+  \newsavebox{\attrPoints}\newsavebox{\attrValue}
+  \define@key{attribute}{points}[0]{%
+    \savebox{\attrPoints}{{\color{gray}##1}}%
+  }
+  \define@key{attribute}{value}[10]{%
+    \savebox{\attrValue}{\Huge ##1}%
+  }
+  \newcommand{\add@Attribute}[3][points,value]{
+    \setkeys{attribute}{##1}%
+    \begin{tikzpicture}[remember picture,overlay,name prefix=tc\theTwoColEnv-]
+      % Node with attribute text - invisible frame
+      \node[below,yshift=-\value{##2Attributes}\attrHeight,minimum size=\attrHeight,align=center,inner sep=0pt]
+      (at\arabic{##2Attributes}) at (##2Col.north) {
+        \textsc{\large ##3}\\[0pt]%
+        [\hspace{1.5em}]\\[-1\baselineskip]
+        \usebox{\attrPoints}\\[0.5em]%
+        \usebox{\attrValue}
+      };
+      % Do not draw the separator line if this is the first attribute in column
+      \ifthenelse{\value{##2Attributes} = 0}{}{
+        \draw[line width=1pt] (at\arabic{##2Attributes}.north west) -- (at\arabic{##2Attributes}.north east);
+      }
+    \end{tikzpicture}%
+    \savebox{\attrPoints}{}\savebox{\attrValue}{}%
+    \stepcounter{##2Attributes}%
+  }
+  \newcommand{\addLeftAttribute}[2][points,value]{\add@Attribute[##1]{Left}{##2}}%
+  \newcommand{\addRightAttribute}[2][points,value]{\add@Attribute[##1]{Right}{##2}}%
+}% === END   Start  twosidecolumns ===
+{\noindent\ignorespacesafterend
+  % === BEGIN Finish twosidecolumns ===
+  \restoregeometry
+}% === END   Finish twosidecolumns ===
+
+\endinput
