@@ -7,7 +7,7 @@
 \RequirePackage{tikz}
 \RequirePackage{xkeyval}
 
-%% Booleans and tests
+% %%%%%%%%%%%%% Page Environments %%%%%%%%%%%%%
 
 %% Two side column environment
 \newcounter{TwoColEnv} %% Count usage of environment for tikz naming and targeting
@@ -68,5 +68,38 @@
   % === BEGIN Finish twosidecolumns ===
   \restoregeometry
 }% === END   Finish twosidecolumns ===
+
+% %%%%%%%%%%%%% Character Attributes Management %%%%%%%%%%%%%
+
+% Count running totals of invested points
+\newcounter{GCS@attr@total}
+
+% Each attribute is defined as having label, value and optional invested points.
+% All of those are arbitrary text.
+% - Label is human-readable name of the attribute (i. e. Dexterity or Swing)
+% - Value is the numerical value of that attribute (i. e. 12 or 1d+1)
+% - Points are points invested in the attribute
+
+% Define keys for saving user input
+\define@cmdkeys[GCS]{newAttribute}[GCS@na@]{points,value}
+% Clean the keys
+\def\GCS@na@value{} \def\GCS@na@points{}
+
+\newcommand{\newAttribute}[3][]{%
+  \setkeys[GCS]{newAttribute}{#1}%
+  \expandafter\edef\csname GCS@attr@#2@label\endcsname{#3}%
+  \expandafter\edef\csname GCS@attr@#2@value\endcsname{\GCS@na@value}%
+  \expandafter\edef\csname GCS@attr@#2@points\endcsname{\GCS@na@points}%
+  % add points to running total
+  \addtocounter{GCS@attr@total}{0\GCS@na@points}%
+  % clean used keys
+  \def\GCS@na@value{} \def\GCS@na@points{}
+}
+\newcommand{\@attr}[2]{\csname GCS@attr@#1@#2\endcsname }
+\newcommand{\attrLabel}[1]{\@attr{#1}{label}}
+\newcommand{\attrValu}[1]{\@attr{#1}{value}}
+\newcommand{\attrPoint}[1]{\@attr{#1}{points}}
+
+\newcommand{\totalAttr}{\theGCS@attr@total}
 
 \endinput
