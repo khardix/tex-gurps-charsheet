@@ -10,30 +10,23 @@
 \begin{document}
 
 \begin{twosidecolumns}
-  První odstavec.
-  \addLeftAttribute[points=40,value=12]{Obratnost}
-  \addLeftAttribute{Síla}
-  \addLeftAttribute{Životy}
+  % Character main attributes
+  \newAttribute{ST}{Síla}
+  \newAttribute[points=40,value=12]{DX}{Obratnost}
+  \newAttribute[points=60,value=13]{IQ}{Inteligence}
+  \newAttribute{HT}{Zdraví}
 
-  \noindent
-  \addRightAttribute[points=60,value=13]{Inteligence}
-  \addRightAttribute{Zdraví}
-  \addRightAttribute{Únava}
-  Druhý odstavec.
+  \addLeftAttribute{DX}
+  \addLeftAttribute{ST}
 
-  \newAttribute{STR}{Síla}
-  \attrLabel{STR}: \attrValu{STR} [\attrPoint{STR}]
+  \addRightAttribute{IQ}
+  \addRightAttribute{HT}
 
-  \newAttribute[points=40,value=12]{DEX}{Obratnost}
-  \attrLabel{DEX}: \attrValu{DEX} [\attrPoint{DEX}]
+  \newAttribute[value=1k]{Swing}{Sek}
+  \newAttribute[value=1k-2]{Thrust}{Bod}
 
-  \newAttribute[points=60,value=13]{INT}{Inteligence}
-  \attrLabel{INT}: \attrValu{INT} [\attrPoint{INT}]
-
-  \newAttribute[value=1k-1]{swing}{Sek}
-  \attrLabel{swing}: \attrValu{swing} [\attrPoint{swing}]
-
-  Total points in attributes: \totalAttr.
+  \addLeftAttribute{Swing}
+  \addRightAttribute{Thrust}
 \end{twosidecolumns}
 
 \end{document}
