@@ -45,18 +45,18 @@
 %% Two side column environment
 \newcounter{GCS@envcnt@twocols} %% Count usage of environment for tikz naming and targeting
 \newenvironment{twosidecolumns}%
-{\ignorespaces
+{\noindent\ignorespaces
   % === BEGIN Start  twosidecolumns ===
   \newcounter{GCS@col@LeftAttributes} % How many attributes are already in left column
   \newcounter{GCS@col@RightAttributes} % How many attributes are already in right column
-  \newlength{\GCS@col@attrheight}\setlength{\GCS@col@attrheight}{2.5cm}
+  \newlength{\GCS@col@attrheight}\setlength{\GCS@col@attrheight}{2.5cm}%
 
   % Set new geometry and make space for the columns
-  \newgeometry{vmargin=1cm,hmargin=3.5cm,includefoot}
+  \newgeometry{vmargin=1cm,hmargin=3.7cm,includefoot}%
   % Calculate total column height
   \newlength{\GCS@col@height}%
   \setlength{\GCS@col@height}{\paperheight}%
-  \addtolength{\GCS@col@height}{-2cm}
+  \addtolength{\GCS@col@height}{-2cm}%
   % Draw the columns - at its base they are simple rectangles
   \begin{tikzpicture}[remember picture, overlay]
     \node[below right, shift={(1cm, -1cm)},inner sep=0pt](tc\theGCS@envcnt@twocols-LeftCol) at (current page.north west)%
@@ -67,10 +67,10 @@
     {
       \tikz\draw[line width=1pt] (0cm, 0cm) rectangle (2.5cm, -1\GCS@col@height);
     };
-  \end{tikzpicture}
+  \end{tikzpicture}%
 
   % Define commands for inserting attributes into columns
-  \newcommand{\add@Attribute}[2]{
+  \newcommand{\add@Attribute}[2]{%
     \begin{tikzpicture}[remember picture,overlay,name prefix=tc\theGCS@envcnt@twocols-]
       % Node with attribute text - invisible frame
       \node[
@@ -97,9 +97,9 @@
   \newcommand{\addLeftAttribute}[1]{\add@Attribute{Left}{##1}}%
   \newcommand{\addRightAttribute}[1]{\add@Attribute{Right}{##1}}%
 }% === END   Start  twosidecolumns ===
-{\noindent\ignorespacesafterend
+{\noindent\ignorespacesafterend%
   % === BEGIN Finish twosidecolumns ===
-  \restoregeometry
+  \restoregeometry%
 }% === END   Finish twosidecolumns ===
 
 \endinput

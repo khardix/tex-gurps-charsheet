@@ -3,30 +3,112 @@
 
 \usepackage{gurps-charsheet}
 \usepackage{fontspec,polyglossia}
+\usepackage{multicol}
 
 \setmainfont{Linux Libertine O}
 \setmainlanguage{czech}
 
+\setlength{\columnseprule}{.5pt}
+\setlength{\columnsep}{1.5em}
+
+% ===== Character statistics =====
+\title{\sc Rahak}
+\author{\sc hraje Khardix}
+\date{}
+
+\newAttribute{ST}{Síla} \newAttribute{HP}{Životy}
+\newAttribute[points=40,value=12]{DX}{Obratnost}
+\newAttribute[points=60,value=13]{IQ}{Inteligence}
+\newAttribute{HT}{Zdraví} \newAttribute{FP}{Únava}
+
+\newAttribute[value=1k-2]{Thrust}{Bod}
+\newAttribute[value=1k]{Swing}{Sek}
+\newAttribute[value={5,5}]{Speed}{Rychlost}
+\newAttribute[value=10\,kg]{Lift}{BL}
+\newAttribute[value=13]{Will}{Vůle}
+\newAttribute[value=13]{Senses}{Smysly}
+\newAttribute[value=7]{Dodge}{Úhyb}
+
+% Define Seconadary characteristics overview table
+% Full (Long) table - parameter is free points
+\newcommand{\longStats}[1][]{%
+  \newcommand{\shortAttr}[1]{\attrLabel{##1}:\,\attrValue{##1}}
+  \begin{center}
+  \begin{tabular}{|c||c|c||c||c|c||c|}\hline
+    \shortAttr{Thrust} &
+    \shortAttr{Speed} &
+    \shortAttr{Senses} &
+    \shortAttr{Dodge} &
+    \shortAttr{Will} &
+    \shortAttr{Lift} &
+    \shortAttr{Swing} \\ \hline
+
+    \multicolumn{7}{|l|}{Volné body:~{\color{gray} #1}} \\ \hline
+  \end{tabular}
+  \end{center}
+}
+
 \begin{document}
+  \begin{twosidecolumns}
+    \vspace{-2em}
+    \begin{center}
+      \textsc{\Huge Rahak}\\
+      \textsc{hraje Khardix}
+    \end{center}
+%
+    \addLeftAttribute{DX}%
+    \addLeftAttribute{ST}%
+    \addLeftAttribute{HP}%
+    \addRightAttribute{IQ}%
+    \addRightAttribute{HT}%
+    \addRightAttribute{FP}%
 
-\begin{twosidecolumns}
-  % Character main attributes
-  \newAttribute{ST}{Síla}
-  \newAttribute[points=40,value=12]{DX}{Obratnost}
-  \newAttribute[points=60,value=13]{IQ}{Inteligence}
-  \newAttribute{HT}{Zdraví}
+    \vspace{-2em}\noindent\longStats[2$\cdot$]
 
-  \addLeftAttribute{DX}
-  \addLeftAttribute{ST}
+    \hrule\medskip
 
-  \addRightAttribute{IQ}
-  \addRightAttribute{HT}
+    \noindent
+    \textbf{Vzhled:} 185\,cm, 70\,kg, 21 let. Hubený, kraší hnědé vlasy, zelené
+    oči, atraktivní (+1).
 
-  \newAttribute[value=1k]{Swing}{Sek}
-  \newAttribute[value=1k-2]{Thrust}{Bod}
+    \noindent
+    \textbf{Povaha:}  Váží si kvalitně provedené práce a~schopných jedinců. Nemá
+    rád pocit bezmoci, dlouhodobou fyzickou práci a lidi, kteří se příliš
+    spoléhají na ostatní nebo na štěstí. Má rád knihy, exotické příběhy a~věci
+    z~daleka.
 
-  \addLeftAttribute{Swing}
-  \addRightAttribute{Thrust}
-\end{twosidecolumns}
+    \medskip\hrule
 
+    \begin{multicols}{2}
+      \section*{Výhody}
+      \begin{itemize}
+        \item \textbf{Charisma +1:} Bonus na všechny hody na reakci v~aktivní
+          konverzaci.
+        \item \textbf{Bleskový počtář:} \emph{Hráč} může kdykoliv použít
+          kalkulačku na řešení matematických problémů \emph{postavy}.
+        \item \textbf{Dobrá pamět:} Automaticky si pamatuje obecné informace, s
+          hodem na \textsc{Int} i~detaily.
+        \item \textbf{Jazykový talent:} Učí se jazyky za poloviční cenu a čas.
+        \item \textbf{Dobrá rovnováha:} Bonus +6 na kluzkém povrchu, v~boji +4
+          proti sražení, zakopnutí\ldots
+      \end{itemize}
+      
+      \section*{Nevýhody}
+      \begin{itemize}
+        \item \textbf{Hemofilie:} Každou minutu ztrácí tolik životů, kolik bylo
+          původní zranění, dokud není ošetřen (\emph{První pomoc}). V~případě
+          bodného zranění do hrudi i po ošetření ztrácí životy každý den, dokud
+          není operován nebo jinak není zastaveno vnitřní krvácení.
+        \item \textbf{Zvědavý\,(12)}
+      \end{itemize}
+
+      \section*{Perky}
+      \begin{itemize}
+        \item Starání se o jedovatý hmyz ({\it Jedy}).
+      \end{itemize}
+    \end{multicols}
+
+    \hrule\medskip
+    
+  \end{twosidecolumns}
 \end{document}
